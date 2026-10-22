@@ -1,0 +1,9 @@
+{
+  "name": "verifyTicket",
+  "version": "1.0.0",
+  "description": "核验购票订单号, 通过后返回票档(分区)与数量, 并绑定 openid",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

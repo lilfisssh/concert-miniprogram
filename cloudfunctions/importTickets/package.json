@@ -1,0 +1,9 @@
+{
+  "name": "importTickets",
+  "version": "1.0.0",
+  "description": "把外部购票订单号写入 tickets 集合(手动/HTTP/被其他同步函数调用)",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

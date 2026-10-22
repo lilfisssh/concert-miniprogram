@@ -1,0 +1,9 @@
+{
+  "name": "syncWxStoreOrders",
+  "version": "1.0.0",
+  "description": "定时轮询微信视频号小店已支付订单, 按SKU映射票档写入 tickets",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

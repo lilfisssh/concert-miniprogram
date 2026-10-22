@@ -1,0 +1,9 @@
+{
+  "name": "claimSeats",
+  "version": "1.0.0",
+  "description": "核验票后, 事务校验并把座位绑定到订单号(无支付)",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

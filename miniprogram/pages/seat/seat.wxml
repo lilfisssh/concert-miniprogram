@@ -1,0 +1,58 @@
+<!-- 选座页 -->
+<view class="page">
+
+  <!-- 舞台 -->
+  <view class="stage">舞台 / Stage</view>
+
+  <!-- 票档提示 -->
+  <view class="ticket-banner">你的票档：<text class="zone-name">{{zoneName}}</text> · 请选择 {{qty}} 个座位（仅该区域可选）</view>
+
+  <!-- 图例 -->
+  <view class="legend">
+    <view class="legend-item">
+      <view class="legend-dot" style="background:#2ECC71"></view>
+      <text class="legend-txt">已选</text>
+    </view>
+    <view class="legend-item">
+      <view class="legend-dot" style="background:#C8C8C8"></view>
+      <text class="legend-txt">已售</text>
+    </view>
+    <view class="legend-item">
+      <view class="legend-dot" style="background:#E6E6E6"></view>
+      <text class="legend-txt">非本票档</text>
+    </view>
+  </view>
+
+  <!-- 座位画布 -->
+  <view class="canvas-wrap">
+    <canvas
+      type="2d"
+      id="seatCanvas"
+      class="seat-canvas"
+      bindtouchstart="onTouchStart"
+      bindtouchmove="onTouchMove"
+      bindtouchend="onTouchEnd"></canvas>
+
+    <!-- 缩放按钮 -->
+    <view class="zoom-controls">
+      <view class="zoom-btn" bindtap="zoomIn">＋</view>
+      <view class="zoom-btn" bindtap="zoomOut">－</view>
+      <view class="zoom-btn" bindtap="resetView">⟲</view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading">加载座位中…</view>
+  </view>
+
+  <!-- 底部已选 + 确认 -->
+  <view class="bottombar">
+    <view class="selected-line">
+      <block wx:if="{{count === 0}}">请在 {{zoneName}} 区选择 {{qty}} 个座位</block>
+      <block wx:else>已选：{{selectedText}}</block>
+    </view>
+    <view class="action-line">
+      <text class="total">已选 {{count}}/{{qty}}</text>
+      <button class="confirm btn-primary" disabled="{{count !== qty}}" bindtap="onConfirm">确认锁座</button>
+    </view>
+  </view>
+
+</view>

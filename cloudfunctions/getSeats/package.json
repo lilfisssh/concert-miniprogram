@@ -1,0 +1,9 @@
+{
+  "name": "getSeats",
+  "version": "1.0.0",
+  "description": "查询某场次的已售/已锁座位",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

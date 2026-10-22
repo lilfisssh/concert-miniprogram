@@ -1,0 +1,26 @@
+# Dependencies and generated mini program bundles
+node_modules/
+miniprogram_npm/
+dist/
+coverage/
+
+# Developer tools and local configuration
+project.private.config.json
+*.local.json
+.env
+.env.*
+!.env.example
+.claude/
+.codex/
+.idea/
+.vscode/
+.DS_Store
+*.log
+
+# Credentials and private exports
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json

@@ -1,0 +1,54 @@
+.page {
+  padding: 16rpx;
+  padding-bottom: 200rpx;
+}
+.card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+}
+.title {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rpx 0;
+}
+.k { color: #888; font-size: 28rpx; }
+.v { color: #333; font-size: 28rpx; }
+.total { color: #e8543e; font-size: 40rpx; font-weight: bold; }
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.seat-dot { width: 24rpx; height: 24rpx; border-radius: 4rpx; margin-right: 12rpx; }
+.seat-label { flex: 1; font-size: 28rpx; color: #333; }
+.seat-zone { font-size: 24rpx; color: #999; margin-right: 16rpx; }
+.seat-price { font-size: 28rpx; color: #e8543e; }
+
+.footer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: #fff;
+  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 8rpx rgba(0,0,0,0.06);
+}
+.pay {
+  width: 100%;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+}
+.tip {
+  text-align: center;
+  color: #999;
+  font-size: 22rpx;
+  margin-top: 12rpx;
+}

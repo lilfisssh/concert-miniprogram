@@ -1,0 +1,7 @@
+<view class="page">
+  <view class="icon {{success ? 'ok' : 'fail'}}">{{success ? '✓' : '✕'}}</view>
+  <view class="msg">{{success ? '选座成功' : '锁座失败'}}</view>
+  <view class="order" wx:if="{{orderId}}">订单号：{{orderId}}</view>
+  <view class="order" wx:if="{{seats}}">座位：{{seats}}</view>
+  <button class="back btn-primary" bindtap="backHome">完成</button>
+</view>

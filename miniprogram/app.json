@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/verify/verify",
+    "pages/seat/seat",
+    "pages/order/order",
+    "pages/result/result"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#222222",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "选座购票",
+    "backgroundColor": "#f5f5f5"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "cloud": true
+}

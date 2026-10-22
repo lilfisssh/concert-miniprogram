@@ -1,0 +1,20 @@
+<view class="page">
+  <view class="card">
+    <view class="title">订单核验</view>
+    <view class="row"><text class="k">订单号</text><text class="v">{{orderNo}}</text></view>
+    <view class="row"><text class="k">票档</text><text class="v">{{zoneName}}</text></view>
+  </view>
+
+  <view class="card">
+    <view class="title">已选座位（{{seats.length}}）</view>
+    <view class="seat-row" wx:for="{{seats}}" wx:key="key">
+      <view class="seat-dot" style="background:{{zoneColors[item.zone]}}"></view>
+      <text class="seat-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="pay btn-primary" loading="{{claiming}}" disabled="{{claiming}}" bindtap="onClaim">确认锁座</button>
+    <view class="tip">确认后座位即绑定到该订单，不可更改，请核对无误</view>
+  </view>
+</view>
