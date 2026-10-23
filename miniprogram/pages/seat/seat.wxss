@@ -1,129 +1,353 @@
-.page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: #f5f5f5;
-}
-
-/* 舞台 */
-.stage {
-  margin: 16rpx auto 8rpx;
-  width: 70%;
-  height: 64rpx;
-  line-height: 64rpx;
-  text-align: center;
-  color: #333;
-  font-size: 28rpx;
-  letter-spacing: 4rpx;
-  background: linear-gradient(#ffe14d, #ffd400);
-  border-radius: 8rpx;
-}
-
-/* 票档提示 */
-.ticket-banner {
-  margin: 4rpx 16rpx;
-  padding: 12rpx 16rpx;
-  background: #eef5ff;
-  border-radius: 8rpx;
-  font-size: 24rpx;
-  color: #2b6cb0;
-  text-align: center;
-}
-.ticket-banner .zone-name {
-  font-weight: bold;
-}
-
-/* 图例 */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 8rpx 12rpx;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  margin: 4rpx 12rpx;
-}
-.legend-dot {
-  width: 22rpx;
-  height: 22rpx;
-  border-radius: 4rpx;
-  margin-right: 6rpx;
-}
-.legend-txt {
-  font-size: 22rpx;
-  color: #555;
-}
-
-/* 画布 */
-.canvas-wrap {
+/* 选座页 —— 对照 SEAT_SPEC.md / proto index.html
+   A #2F6B4F · B #5B9A72 · C #A8D5B5 · 金 #D4AF37 */
+.seat-page {
   position: relative;
-  flex: 1;
-  margin: 0 8rpx;
-  background: #fff;
-  border-radius: 8rpx;
+  height: 100vh;
+  overflow: hidden;
+  background: #F5F1E8;
+}
+
+/* 水墨底占位（正式版：seat_ink_bg + inkDriftSeat 慢移 ≤3%） */
+.bg-drift {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background:
+    radial-gradient(90% 42% at 12% 88%, rgba(47, 107, 79, 0.16), rgba(47, 107, 79, 0) 62%),
+    radial-gradient(95% 46% at 88% 80%, rgba(91, 154, 114, 0.18), rgba(91, 154, 114, 0) 66%),
+    radial-gradient(70% 30% at 50% 4%, rgba(168, 213, 181, 0.30), rgba(168, 213, 181, 0) 70%);
+}
+
+.map-wrap {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
   overflow: hidden;
 }
-.seat-canvas {
-  width: 100%;
-  height: 100%;
-}
-.loading {
+
+.seat-map {
   position: absolute;
-  top: 50%;
   left: 0;
-  right: 0;
-  text-align: center;
-  color: #999;
-  font-size: 26rpx;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
 }
 
-/* 缩放按钮 */
-.zoom-controls {
+/* ---- 舞台 ---- */
+.stage {
   position: absolute;
-  right: 16rpx;
-  bottom: 16rpx;
+  top: 2px;
+  width: 300px;
+  padding: 6px 10px 4px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 10px 10px 46% 46% / 10px 10px 22px 22px;
   display: flex;
   flex-direction: column;
-}
-.zoom-btn {
-  width: 64rpx;
-  height: 64rpx;
-  line-height: 64rpx;
-  text-align: center;
-  margin-top: 12rpx;
-  background: rgba(0,0,0,0.55);
-  color: #fff;
-  font-size: 36rpx;
-  border-radius: 50%;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
 }
 
-/* 底部栏 */
-.bottombar {
-  background: #fff;
-  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
-  box-shadow: 0 -2rpx 8rpx rgba(0,0,0,0.06);
-}
-.selected-line {
-  font-size: 26rpx;
-  color: #333;
-  min-height: 36rpx;
-  line-height: 36rpx;
-}
-.action-line {
+.stage-label {
   display: flex;
   align-items: center;
-  margin-top: 12rpx;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
 }
-.total {
+
+.stage-label .line {
   flex: 1;
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #e8543e;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(26, 48, 38, 0.5), transparent);
+  max-width: 78px;
 }
-.confirm {
-  width: 240rpx;
-  font-size: 30rpx;
-  border-radius: 44rpx;
+
+.stage-label .txt {
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(26, 48, 38, 0.9);
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  white-space: nowrap;
 }
+
+.stage-curve {
+  width: 248px;
+  height: 14px;
+  border-bottom: 2.75px solid rgba(40, 48, 42, 0.78);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
+.stage-note {
+  font-size: 10px;
+  color: rgba(107, 127, 110, 0.75);
+  letter-spacing: 0.04em;
+}
+
+/* ---- 分区块 ---- */
+.zone {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 7px;
+  border: 1.5px solid transparent;
+  box-sizing: border-box;
+}
+
+/* 当前票档区：细框高亮（SEAT_SPEC） */
+.zone.ticket-zone {
+  border-color: rgba(47, 107, 79, 0.55);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* 聚焦区框 */
+.zone.focused {
+  border-color: rgba(47, 107, 79, 0.7);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 1px rgba(47, 107, 79, 0.25);
+}
+
+.zone-label {
+  text-align: center;
+  font-size: 10px;
+  color: #6B7F6E;
+  letter-spacing: 0.1em;
+  height: 14px;
+  line-height: 14px;
+}
+
+.row { display: flex; gap: 4px; justify-content: center; }
+
+/* ---- 座位状态（SEAT_SPEC：金边只给已选） ---- */
+.seat {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.seat.zone-a { background: rgba(47, 107, 79, 0.40); border-color: rgba(47, 107, 79, 0.42); }
+.seat.zone-b { background: rgba(91, 154, 114, 0.40); border-color: rgba(91, 154, 114, 0.40); }
+.seat.zone-c { background: rgba(168, 213, 181, 0.42); border-color: rgba(120, 170, 140, 0.45); color: #1F3A2E; }
+
+/* 可选：无金边，字母半透明 */
+.seat.available { color: rgba(255, 255, 255, 0.42); }
+.seat.zone-c.available { color: rgba(31, 58, 46, 0.4); }
+
+/* 已选：粗金圈 + 字母更清晰 */
+.seat.selected {
+  box-shadow: 0 0 0 3px #D4AF37, 0 0 8px rgba(212, 175, 55, 0.45);
+  color: #fff;
+}
+.seat.zone-a.selected { background: rgba(47, 107, 79, 0.82); }
+.seat.zone-b.selected { background: rgba(91, 154, 114, 0.82); }
+.seat.zone-c.selected { background: rgba(168, 213, 181, 0.88); color: #1F3A2E; }
+
+/* 已售 / 非本票档：灰底小叉，无金边 */
+.seat.sold { background: rgba(156, 163, 175, 0.55); border-color: transparent; }
+.seat.outzone { background: rgba(209, 213, 219, 0.50); border-color: transparent; }
+.seat.sold::after, .seat.outzone::after {
+  content: "×";
+  color: #4B5563;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ---- 看全场 / 提示 ---- */
+.overview-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 6;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 14px;
+  border: 0.5px solid rgba(26, 48, 38, 0.14);
+  background: rgba(255, 255, 255, 0.78);
+  color: #3D5A4A;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 28px;
+  display: none;
+}
+
+.overview-btn.show { display: block; }
+.overview-btn:active { opacity: 0.75; }
+
+.zone-hint {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(26, 48, 38, 0.72);
+  background: rgba(255, 255, 255, 0.72);
+  border: 0.5px solid rgba(26, 48, 38, 0.1);
+  border-radius: 14px;
+  padding: 5px 12px;
+  white-space: nowrap;
+  transition: opacity 0.25s;
+}
+
+.zone-hint.hidden { opacity: 0; }
+
+/* ---- 底栏（半透明，水墨透出） ---- */
+.seat-panel {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 6;
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(16px) saturate(1.08);
+  -webkit-backdrop-filter: blur(16px) saturate(1.08);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 14px calc(8px + env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 32px rgba(26, 48, 38, 0.05);
+}
+
+.ticket-banner {
+  font-size: 11px;
+  color: #3D5A4A;
+  margin-bottom: 8px;
+}
+
+.ticket-banner .zone-name { font-weight: 700; color: #2F6B4F; }
+
+.ticket-tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+
+.ticket-tabs button {
+  flex: 1;
+  height: 34px;
+  border-radius: 17px;
+  border: 1px solid rgba(47, 107, 79, 0.25);
+  background: rgba(255, 255, 255, 0.28);
+  color: #3D5A4A;
+  font-size: 13px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.ticket-tabs button.active {
+  background: #2F6B4F;
+  color: #fff;
+  border-color: #2F6B4F;
+}
+
+.price-cards { display: flex; gap: 8px; margin-bottom: 8px; }
+
+.price-card {
+  flex: 1;
+  border: 1px solid rgba(47, 107, 79, 0.18);
+  border-radius: 10px;
+  padding: 8px 6px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.price-card.active {
+  border-color: #2F6B4F;
+  box-shadow: 0 0 0 1px #2F6B4F;
+}
+
+.price-card .zone-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+.price-card .zn { font-size: 12px; font-weight: 600; color: #1A3026; }
+.price-card .pr { font-size: 16px; font-weight: 700; color: #2F6B4F; margin-top: 2px; }
+.price-card .old { font-size: 10px; color: #9CA3AF; text-decoration: line-through; }
+
+.tip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(251, 243, 216, 0.55);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #8A6A1A;
+  margin-bottom: 10px;
+}
+
+.tip .badge {
+  background: #E8C547;
+  color: #5A4510;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.summary { display: flex; align-items: center; gap: 10px; }
+.summary .info { flex: 1; min-width: 0; }
+.summary .count { font-size: 14px; font-weight: 600; color: #1A3026; }
+.summary .count .em { font-style: normal; color: #8B4513; font-weight: 700; }
+.summary .detail {
+  font-size: 11px;
+  color: #6B7F6E;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.summary .lock {
+  height: 42px;
+  padding: 0 22px;
+  border-radius: 21px;
+  background: #2F6B4F;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 42px;
+  flex-shrink: 0;
+}
+
+.summary .lock[disabled] { background: #A8B5AA; }
+
+.legend {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #6B7F6E;
+}
+
+.legend-item { display: flex; align-items: center; gap: 3px; }
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.legend-dot.gold { box-shadow: 0 0 0 2px #D4AF37; }
+
+button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  font-size: inherit;
+  color: inherit;
+}
+button::after { border: none; }

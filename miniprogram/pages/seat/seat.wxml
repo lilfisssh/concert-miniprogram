@@ -1,58 +1,102 @@
-<!-- 选座页 -->
-<view class="page">
+<!-- 选座页：总览 → 分区聚焦 → 选座（对照 SEAT_SPEC.md / proto index.html） -->
+<view class="seat-page">
+  <!-- 水墨底（占位渐变，正式版换 seat_ink_bg） -->
+  <view class="bg-drift"></view>
 
-  <!-- 舞台 -->
-  <view class="stage">舞台 / Stage</view>
+  <!-- 座位区（拖拽平移；点空白回全场） -->
+  <view
+    id="mapWrap"
+    class="map-wrap {{focused ? '' : 'overview'}}"
+    catchtouchstart="onTouchStart"
+    catchtouchmove="onTouchMove"
+    catchtouchend="onTouchEnd"
+    catchtouchcancel="onTouchEnd"
+    catchtap="onBlankTap">
 
-  <!-- 票档提示 -->
-  <view class="ticket-banner">你的票档：<text class="zone-name">{{zoneName}}</text> · 请选择 {{qty}} 个座位（仅该区域可选）</view>
+    <view
+      class="seat-map"
+      style="width: {{mapW}}px; height: {{mapH}}px; transform: {{mapTransform}}; transition: {{mapTransition}};">
 
-  <!-- 图例 -->
-  <view class="legend">
-    <view class="legend-item">
-      <view class="legend-dot" style="background:#2ECC71"></view>
-      <text class="legend-txt">已选</text>
+      <!-- 舞台（随地图缩放平移；点它回全场） -->
+      <view class="stage" style="left: {{stageX}}px;">
+        <view class="stage-label">
+          <view class="line"></view>
+          <view class="txt">舞台 Stage</view>
+          <view class="line"></view>
+        </view>
+        <view class="stage-curve"></view>
+        <view class="stage-note">第一排距舞台 1.9 米</view>
+      </view>
+
+      <!-- 分区块：BL / A / BR / C -->
+      <view
+        wx:for="{{blocks}}"
+        wx:key="block"
+        class="zone {{focused === item.block ? 'focused' : ''}} {{item.isTicketZone ? 'ticket-zone' : ''}}"
+        style="left: {{item.x}}px; top: {{item.y}}px; width: {{item.w}}px;"
+        data-block="{{item.block}}"
+        catchtap="onZoneTap">
+        <view class="zone-label">{{item.label}}</view>
+        <view class="row" wx:for="{{item.rows}}" wx:for-item="row" wx:key="index">
+          <view
+            wx:for="{{row}}"
+            wx:for-item="seat"
+            wx:key="key"
+            class="seat zone-{{seat.zoneLc}} {{seat.cls}}"
+            data-key="{{seat.key}}"
+            catchtap="onSeatTap">{{seat.cls === 'sold' || seat.cls === 'outzone' ? '' : seat.letter}}</view>
+        </view>
+      </view>
     </view>
-    <view class="legend-item">
-      <view class="legend-dot" style="background:#C8C8C8"></view>
-      <text class="legend-txt">已售</text>
-    </view>
-    <view class="legend-item">
-      <view class="legend-dot" style="background:#E6E6E6"></view>
-      <text class="legend-txt">非本票档</text>
-    </view>
+
+    <button class="overview-btn {{focused ? 'show' : ''}}" catchtap="onOverview">看全场</button>
+    <view class="zone-hint {{focused ? 'hidden' : ''}}" style="bottom: {{panelH + 12}}px;">点选分区后选座</view>
   </view>
 
-  <!-- 座位画布 -->
-  <view class="canvas-wrap">
-    <canvas
-      type="2d"
-      id="seatCanvas"
-      class="seat-canvas"
-      bindtouchstart="onTouchStart"
-      bindtouchmove="onTouchMove"
-      bindtouchend="onTouchEnd"></canvas>
+  <!-- 底栏（半透明，水墨透出） -->
+  <view class="seat-panel" id="seatPanel">
+    <view class="ticket-banner">票档：<text class="zone-name">{{zoneName}}</text> · 请选 {{qty}} 座（限本区）</view>
 
-    <!-- 缩放按钮 -->
-    <view class="zoom-controls">
-      <view class="zoom-btn" bindtap="zoomIn">＋</view>
-      <view class="zoom-btn" bindtap="zoomOut">－</view>
-      <view class="zoom-btn" bindtap="resetView">⟲</view>
+    <!-- 票种 Tab：仅展示，不改价/量 -->
+    <view class="ticket-tabs">
+      <button class="{{ticketTab === 'single' ? 'active' : ''}}" data-tab="single" catchtap="onTicketTab">单人票</button>
+      <button class="{{ticketTab === 'family' ? 'active' : ''}}" data-tab="family" catchtap="onTicketTab">亲子票</button>
+      <button class="{{ticketTab === 'double' ? 'active' : ''}}" data-tab="double" catchtap="onTicketTab">双人票</button>
     </view>
 
-    <view wx:if="{{loading}}" class="loading">加载座位中…</view>
+    <!-- 价格卡：点击聚焦分区；B 卡聚焦左右合框 -->
+    <view class="price-cards">
+      <view
+        wx:for="{{priceCards}}"
+        wx:key="key"
+        class="price-card {{(item.key === 'B' && (focused === 'B' || focused === 'BL' || focused === 'BR')) || focused === item.key ? 'active' : ''}}"
+        data-zone="{{item.key}}"
+        catchtap="onPriceCard">
+        <view class="zn"><view class="zone-dot" style="background: {{item.color}};"></view>{{item.name}}</view>
+        <view class="pr">¥{{item.price}}</view>
+        <view class="old">¥{{item.old}}</view>
+      </view>
+    </view>
+
+    <view class="tip">
+      <text>登录后核验享受七折优惠</text>
+      <text class="badge">7折已生效</text>
+    </view>
+
+    <!-- 汇总 + 确认锁座 -->
+    <view class="summary">
+      <view class="info">
+        <view class="count">已选 <text class="em">{{count}}</text> 座</view>
+        <view class="detail">{{detailLine}}</view>
+      </view>
+      <button class="lock" disabled="{{count !== qty}}" catchtap="onConfirm">确认锁座</button>
+    </view>
+
+    <view class="legend">
+      <view class="legend-item"><view class="legend-dot" style="background: #2F6B4F;"></view>可选</view>
+      <view class="legend-item"><view class="legend-dot gold" style="background: #2F6B4F;"></view>已选</view>
+      <view class="legend-item"><view class="legend-dot" style="background: #9CA3AF;"></view>已售</view>
+      <view class="legend-item"><view class="legend-dot" style="background: #D1D5DB;"></view>非本票档</view>
+    </view>
   </view>
-
-  <!-- 底部已选 + 确认 -->
-  <view class="bottombar">
-    <view class="selected-line">
-      <block wx:if="{{count === 0}}">请在 {{zoneName}} 区选择 {{qty}} 个座位</block>
-      <block wx:else>已选：{{selectedText}}</block>
-    </view>
-    <view class="action-line">
-      <text class="total">已选 {{count}}/{{qty}}</text>
-      <button class="confirm btn-primary" disabled="{{count !== qty}}" bindtap="onConfirm">确认锁座</button>
-    </view>
-  </view>
-
 </view>
