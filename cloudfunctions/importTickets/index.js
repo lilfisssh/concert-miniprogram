@@ -6,7 +6,7 @@
 //   2) HTTP: 配置 HTTP 触发, 外部渠道/腾讯轻联 POST { secret, tickets: [...] }
 //   3) 被 syncWxStoreOrders 等同步函数内部调用
 //
-// 每条 ticket: { orderNo, sessionId, zone(0-3), qty, buyerPhone? }
+// 每条 ticket: { orderNo, sessionId, zone(0=A区/1=B区/2=C区), qty, buyerPhone? }
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();

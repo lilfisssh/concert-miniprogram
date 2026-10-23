@@ -4,10 +4,9 @@ const app = getApp();
 
 // 演示模式测试单号(云环境未配置时可用)
 const DEMO_TICKETS = {
-  'DEMO-VIP-2': { zone: 1, qty: 2 },
-  'DEMO-FRONT-1': { zone: 0, qty: 1 },
-  'DEMO-SIDE-3': { zone: 2, qty: 3 },
-  'DEMO-BACK-2': { zone: 3, qty: 2 }
+  'DEMO-A-1': { zone: 0, qty: 1 },
+  'DEMO-B-2': { zone: 1, qty: 2 },
+  'DEMO-C-2': { zone: 2, qty: 2 }
 };
 
 Page({

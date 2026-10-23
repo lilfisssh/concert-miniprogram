@@ -4,7 +4,7 @@
 
 观众流程：在**微信视频号小店**按票档买票拿到订单号 → 回小程序粘贴订单号核验 → 在对应票档区域选座 → 确认锁座（座位绑定到该订单号）。
 
-座位建模、4 档票价分区由本地早期 Android 座位图版本移植而来。该参考项目不在本仓库中，小程序本身不依赖 Android 项目。
+座位分为 A/B/C 三档 box 布局（A区 7×8、B区左右两块各 5×4、C区 3×6），对照设计原型定稿。
 
 ## 当前状态
 
@@ -25,7 +25,7 @@ concert-miniprogram/
 ├── project.config.json
 ├── miniprogram/                 # 小程序前端
 │   ├── app.js / app.json / app.wxss
-│   ├── utils/venue.js           # 座位建模(13x21网格/座位号/分区)
+│   ├── utils/venue.js           # 座位建模(A/B/C box 布局/座位号/分区)
 │   └── pages/
 │       ├── verify/              # 入口: 粘贴订单号核验
 │       ├── seat/                # 选座页(Canvas, 按票档限分区+限数量)
@@ -45,7 +45,7 @@ concert-miniprogram/
 
 1. 用**微信开发者工具**打开 `concert-miniprogram` 目录，填测试 AppID。
 2. `app.js` 的 `cloudEnv` 仍是 `TODO_...` 时自动进入**演示模式**：
-   - 核验页用内置测试单号（页面下方可点：`DEMO-VIP-2`=中区VIP·2座、`DEMO-FRONT-1`=前排·1座 等）；
+   - 核验页用内置测试单号（页面下方可点：`DEMO-A-1`=A区·1座、`DEMO-B-2`=B区·2座、`DEMO-C-2`=C区·2座）；
    - 核验 → 选座（限对应分区/数量）→ 确认锁座 → 结果，整套流程走通，不依赖云端。
 
 ---
@@ -95,7 +95,7 @@ concert-miniprogram/
 `verifyTicket`、`getSeats`、`claimSeats`、`importTickets`、`syncWxStoreOrders`。
 
 ### 3. 创建数据库集合（权限都设为「仅管理端/云函数可读写」）
-- **`tickets`**（单号库）：`_id=orderNo`，字段 `orderNo / sessionId / zone(0-3) / qty / buyerPhone / status(unused|used) / boundOpenid / seats[] / source / importTime / verifyTime / useTime`
+- **`tickets`**（单号库）：`_id=orderNo`，字段 `orderNo / sessionId / zone(0=A区,1=B区,2=C区) / qty / buyerPhone / status(unused|used) / boundOpenid / seats[] / source / importTime / verifyTime / useTime`
 - **`seats`**（座位占用）：`_id=场次Id__row_col`，字段 `sessionId / seatKey / status(sold) / orderNo / holder / soldTime`
 - **`sync_state`**（同步游标，自动同步用）：`_id=wxstore`，字段 `lastSyncTime`
 
@@ -124,7 +124,7 @@ concert-miniprogram/
 
 > 详见对话里的「微信小店加商品」分步指引。要点：
 1. 视频号小店「商品管理 → 添加商品」，商品类型选**虚拟商品/无需物流**。
-2. 每个**票档建一个商品**（或一个商品多个 SKU）：前排¥680、中区VIP¥880、侧区¥480、后排¥280。
+2. 每个**票档建一个商品**（或一个商品多个 SKU）：A区¥76、B区¥69、C区¥62。
 3. 商品详情写清「付款后用订单号到选座小程序选座」。
 4. 上架后记下每个商品的 **product_id/sku_id**，填进 `syncWxStoreOrders` 的 `SKU_ZONE_MAP`。
 
@@ -143,7 +143,7 @@ concert-miniprogram/
 
 | 改什么 | 改哪里 |
 |---|---|
-| 座位布局 / 座位号 / 分区 | `miniprogram/utils/venue.js` 与 `cloudfunctions/claimSeats/venue.js` 的 `buildSeatNo()`/`zoneOf()`（**两处同步**） |
+| 座位布局 / 座位号 / 分区 | `miniprogram/utils/venue.js` 与 `cloudfunctions/claimSeats/venue.js` 的 `BLOCKS`/`zoneOf()`（**两处同步**） |
 | 票档→分区映射 | `syncWxStoreOrders` 的 `SKU_ZONE_MAP` |
 | 演示测试单号 | `pages/verify/verify.js` 的 `DEMO_TICKETS` |
 | 场次ID | `app.js` 的 `sessionId` 与 `syncWxStoreOrders` 的 `SESSION_ID` |

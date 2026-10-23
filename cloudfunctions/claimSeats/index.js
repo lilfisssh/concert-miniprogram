@@ -39,9 +39,9 @@ exports.main = async (event) => {
 
   // 校验每个座位: 合法 + 属于票档分区
   for (const key of seats) {
-    const { row, col } = venue.parseKey(key);
-    if (!venue.isSeat(row, col)) return { success: false, message: '存在非法座位' };
-    if (venue.zoneOf(row, col) !== ticket.zone) {
+    const { block, row, col } = venue.parseKey(key);
+    if (!venue.isSeat(block, row, col)) return { success: false, message: '存在非法座位' };
+    if (venue.zoneOf(block) !== ticket.zone) {
       return { success: false, message: '所选座位超出你的票档区域' };
     }
   }

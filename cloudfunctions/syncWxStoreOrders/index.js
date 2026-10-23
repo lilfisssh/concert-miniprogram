@@ -14,13 +14,12 @@ const db = cloud.database();
 const SESSION_ID = 'concert-2026-06-21';
 
 // ⚠️ 关键配置: 把小店里每个「门票商品/SKU」映射到票档分区与每单数量。
-// key 用你在微信小店创建商品后拿到的 product_id 或 sku_id; zone: 0前排 1中区VIP 2侧区 3后排。
+// key 用你在微信小店创建商品后拿到的 product_id 或 sku_id; zone: 0=A区 1=B区 2=C区。
 // qtyPerUnit: 一个购买数量对应几个座位(通常 1, 即买N张=N座)。
 const SKU_ZONE_MAP = {
-  'TODO_PRODUCT_ID_FRONT': { zone: 0, qtyPerUnit: 1 }, // 前排 ¥680
-  'TODO_PRODUCT_ID_VIP': { zone: 1, qtyPerUnit: 1 },   // 中区VIP ¥880
-  'TODO_PRODUCT_ID_SIDE': { zone: 2, qtyPerUnit: 1 },  // 侧区 ¥480
-  'TODO_PRODUCT_ID_BACK': { zone: 3, qtyPerUnit: 1 }   // 后排 ¥280
+  'TODO_PRODUCT_ID_A': { zone: 0, qtyPerUnit: 1 }, // A区 ¥76
+  'TODO_PRODUCT_ID_B': { zone: 1, qtyPerUnit: 1 }, // B区 ¥69(B左/B右同属此档)
+  'TODO_PRODUCT_ID_C': { zone: 2, qtyPerUnit: 1 }  // C区 ¥62
 };
 
 exports.main = async () => {

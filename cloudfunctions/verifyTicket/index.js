@@ -1,6 +1,6 @@
 // 云函数 verifyTicket: 核验外部购票订单号。
 // tickets 集合文档结构(由入库层写入):
-//   _id=orderNo, orderNo, sessionId, zone(0-3), qty, buyerPhone, status('unused'|'used'),
+//   _id=orderNo, orderNo, sessionId, zone(0=A区/1=B区/2=C区), qty, buyerPhone, status('unused'|'used'),
 //   boundOpenid, seats[], source, importTime, verifyTime, useTime
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });

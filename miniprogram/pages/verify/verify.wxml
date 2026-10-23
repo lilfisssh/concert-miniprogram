@@ -30,12 +30,12 @@
 
   <view class="tips">
     <view class="tip-title">购票说明</view>
-    <view class="tip-line">1. 在「微信小店」按票档（前排/中区VIP/侧区/后排）下单购票</view>
+    <view class="tip-line">1. 在「微信小店」按票档（A区/B区/C区）下单购票</view>
     <view class="tip-line">2. 付款成功后获得订单号</view>
     <view class="tip-line">3. 回到本小程序输入订单号，核验通过后在对应区域选座</view>
   </view>
 
   <view wx:if="{{demoMode}}" class="demo">
-    演示模式可用测试单号：<text class="demo-code" bindtap="fillDemo" data-code="DEMO-VIP-2">DEMO-VIP-2</text>（中区VIP·2座）、<text class="demo-code" bindtap="fillDemo" data-code="DEMO-FRONT-1">DEMO-FRONT-1</text>（前排·1座）
+    演示模式可用测试单号：<text class="demo-code" bindtap="fillDemo" data-code="DEMO-A-1">DEMO-A-1</text>（A区·1座）、<text class="demo-code" bindtap="fillDemo" data-code="DEMO-B-2">DEMO-B-2</text>（B区·2座）、<text class="demo-code" bindtap="fillDemo" data-code="DEMO-C-2">DEMO-C-2</text>（C区·2座）
   </view>
 </view>
