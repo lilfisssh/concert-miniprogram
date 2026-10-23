@@ -1,0 +1,46 @@
+<!-- 我的（对照 MY_PAGE_SPEC）：未登录 / 已登录有单 / 已登录空单 -->
+<view class="me">
+  <view class="title">我的订单</view>
+
+  <!-- 未登录：登录卡 -->
+  <view wx:if="{{!loggedIn}}" class="login-card">
+    <view class="txt">
+      <view class="h">未登录</view>
+      <view class="s">登录关联微信账号，便于订单联系</view>
+    </view>
+    <button class="btn-wx" bindtap="onLogin">微信登录</button>
+  </view>
+
+  <!-- 已登录：资料卡 -->
+  <view wx:else class="profile-card">
+    <view class="avatar">诗</view>
+    <view class="txt">
+      <view class="h">诗声观众</view>
+      <text class="wx-pill">已绑定微信</text>
+    </view>
+    <button class="btn-logout" bindtap="onLogout">退出登录</button>
+  </view>
+
+  <!-- 已登录有单：订单列表 -->
+  <block wx:if="{{loggedIn && orders.length > 0}}">
+    <view class="sec-label">我的订单</view>
+    <view class="order-list">
+      <view class="order-card" wx:for="{{orders}}" wx:key="orderNo">
+        <view class="body">
+          <view class="seat-line">{{item.line}}</view>
+          <view class="meta">{{item.meta}}</view>
+          <view class="meta">订单号 {{item.orderNo}}</view>
+        </view>
+        <view class="badge">{{item.status}}</view>
+        <view class="chev">›</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 空状态：未登录 / 已登录空单共用文案；按钮仅文案相同 -->
+  <view wx:if="{{!loggedIn || orders.length === 0}}" class="empty">
+    <view class="h">还没有订单</view>
+    <view class="s">好座位不等人</view>
+    <button class="btn-go" bindtap="goBuy">去购票<text class="en">Buy Tickets</text></button>
+  </view>
+</view>

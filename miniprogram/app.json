@@ -1,15 +1,29 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/verify/verify",
+    "pages/me/me",
+    "pages/about/about",
     "pages/seat/seat",
     "pages/order/order",
     "pages/result/result"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#222222",
-    "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "选座购票",
-    "backgroundColor": "#f5f5f5"
+    "navigationBarBackgroundColor": "#F7F3EB",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "忆诗声予你",
+    "backgroundColor": "#F7F3EB"
+  },
+  "tabBar": {
+    "color": "#8A9A8E",
+    "selectedColor": "#2F6B4F",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "首页" },
+      { "pagePath": "pages/verify/verify", "text": "购票" },
+      { "pagePath": "pages/me/me", "text": "我的" }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",

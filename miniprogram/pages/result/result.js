@@ -13,6 +13,6 @@ Page({
     });
   },
   backHome() {
-    wx.reLaunch({ url: '/pages/verify/verify' });
+    wx.switchTab({ url: '/pages/home/home' });
   }
 });

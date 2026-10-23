@@ -27,8 +27,11 @@ concert-miniprogram/
 │   ├── app.js / app.json / app.wxss
 │   ├── utils/venue.js           # 座位建模(A/B/C box 布局/座位号/分区)
 │   └── pages/
-│       ├── verify/              # 入口: 粘贴订单号核验
-│       ├── seat/                # 选座页(Canvas, 按票档限分区+限数量)
+│       ├── home/                # 首页 Tab(全屏水墨+「立即购票」入口)
+│       ├── verify/              # 购票 Tab: 粘贴订单号核验
+│       ├── me/                  # 我的 Tab(微信登录/我的订单, 演示 mock)
+│       ├── about/               # 活动介绍(独立页不占 Tab, 底部仿 Tab 高亮首页)
+│       ├── seat/                # 选座页(按票档限分区+限数量; 交互重做中)
 │       ├── order/               # 确认锁座(无支付)
 │       └── result/              # 选座结果
 └── cloudfunctions/              # 云开发后端

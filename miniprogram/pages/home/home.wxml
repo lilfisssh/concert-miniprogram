@@ -1,0 +1,34 @@
+<!-- 首页：全屏水墨(壳阶段为占位渐变) + DOM 叠字 -->
+<view class="home" style="padding-top: {{statusBarHeight}}px">
+  <view class="bg" aria-hidden="true"></view>
+
+  <view class="home-ui">
+    <!-- 顶部字群：WELFARE CONCERT / 忆诗声予你 / 细线 / 时间地点 -->
+    <view class="hero-copy">
+      <view class="eyebrow">WELFARE CONCERT</view>
+      <view class="title-zh">忆诗声予你</view>
+      <view class="rule"></view>
+      <view class="meta">2026.08.10 18:00&nbsp;&nbsp;智慧山 · 飞鸟剧场</view>
+    </view>
+
+    <view class="spacer"></view>
+
+    <!-- 中下 CTA -->
+    <view class="cta-wrap">
+      <button class="cta" bindtap="goBuy" aria-label="立即购票">立即购票<text class="en">Buy Tickets</text></button>
+    </view>
+
+    <!-- 底链：活动介绍 / 我的订单 / 我的 -->
+    <view class="entry-links">
+      <button class="link" bindtap="goAbout" aria-label="活动介绍">
+        <text class="zh">活动介绍</text><text class="en">About</text>
+      </button>
+      <button class="link" bindtap="goMe" aria-label="我的订单">
+        <text class="zh">我的订单</text><text class="en">My Orders</text>
+      </button>
+      <button class="link" bindtap="goMe" aria-label="我的">
+        <text class="zh">我的</text><text class="en">Me</text>
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,206 @@
+/* 我的 —— 对照 proto/index.html #orders / MY_PAGE_SPEC（壳：宣纸底，水墨图后补） */
+.me {
+  min-height: 100vh;
+  padding: 0 18px calc(24px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  font-family: "Songti SC", serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1A3026;
+  height: 36px;
+  line-height: 36px;
+}
+
+.login-card,
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 0.5px solid rgba(26, 48, 38, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 2px 10px rgba(26, 48, 38, 0.04);
+  margin-top: 10px;
+}
+
+.txt { flex: 1; min-width: 0; }
+
+.h {
+  font-family: "Songti SC", serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A3026;
+}
+
+.s {
+  font-size: 11px;
+  color: rgba(26, 48, 38, 0.55);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+.btn-wx {
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 17px;
+  background: #2F6B4F;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 34px;
+}
+
+.btn-wx:active { opacity: 0.85; }
+
+.avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #7A9A86;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.wx-pill {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(26, 48, 38, 0.06);
+  color: rgba(26, 48, 38, 0.55);
+  font-size: 10px;
+}
+
+.btn-logout {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(26, 48, 38, 0.18);
+  background: rgba(255, 255, 255, 0.7);
+  color: #3D5A4A;
+  font-size: 12px;
+  line-height: 30px;
+}
+
+.btn-logout:active { background: rgba(47, 107, 79, 0.06); }
+
+.sec-label {
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A3026;
+  margin: 18px 0 10px;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 0.5px solid rgba(26, 48, 38, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 2px 10px rgba(26, 48, 38, 0.04);
+}
+
+.order-card .body { flex: 1; min-width: 0; }
+
+.seat-line {
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A3026;
+}
+
+.order-card .meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: rgba(26, 48, 38, 0.5);
+  line-height: 1.45;
+}
+
+.badge {
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #C9B896;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.chev {
+  flex-shrink: 0;
+  color: rgba(26, 48, 38, 0.28);
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 96px 0 56px;
+}
+
+.empty .h {
+  font-size: 22px;
+}
+
+.empty .s {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.btn-go {
+  margin-top: 22px;
+  height: 42px;
+  padding: 0 28px;
+  border-radius: 21px;
+  border: 1.5px solid #2F6B4F;
+  background: rgba(255, 255, 255, 0.55);
+  color: #1A3026;
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 40px;
+}
+
+.btn-go .en {
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.btn-go:active { background: rgba(47, 107, 79, 0.08); }
+
+button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  line-height: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+button::after { border: none; }

@@ -1,0 +1,94 @@
+<!-- 活动介绍：独立页不占 Tab，顶栏「‹ 返回」回首页 -->
+<view class="about" style="padding-top: {{statusBarHeight}}px">
+
+  <!-- 自绘顶栏（custom 导航） -->
+  <view class="about-top">
+    <button class="about-back" bindtap="goBack" aria-label="返回">‹ 返回</button>
+    <view class="about-title">忆诗声予你 · 音乐会</view>
+  </view>
+
+  <view class="about-body">
+
+    <!-- 1. 活动介绍 -->
+    <view class="sec">
+      <view class="sec-h">活动介绍</view>
+      <view class="intro-body">
+        <view class="p">「忆诗声予你」，一场属于高中生的音乐约定。</view>
+        <view class="p">2024年夏天，一群高中生凭借着一腔热血办了一场音乐会——有遗憾，但更多的是回响。</view>
+        <view class="p">2026年，2.0重启，带着1.0的全部教训与感动。</view>
+        <view class="p">这里不只是一场演出，而是一群人接力完成的青春作品。</view>
+        <view class="p">舞台会落幕，但声音会一直传递。</view>
+        <view class="p emph">忆诗声予你2.0。\n让我们共同——倾听来自青春的音乐。</view>
+      </view>
+    </view>
+
+    <!-- 2. 演出节目单 -->
+    <view class="sec">
+      <view class="sec-h">演出节目单</view>
+      <view class="card program-card">
+        <block wx:for="{{programs}}" wx:key="num">
+          <view class="prog-item" wx:if="{{index < 3 || showAllPrograms}}">
+            <view><text class="num">{{item.num}}</text><text class="name">{{item.name}}</text></view>
+            <view class="who">{{item.who}}</view>
+          </view>
+        </block>
+        <button class="prog-more" bindtap="togglePrograms">
+          {{showAllPrograms ? '收起节目单' : '查看完整节目单 · 共 20 首 ›'}}
+        </button>
+      </view>
+    </view>
+
+    <!-- 3. 伴手礼 -->
+    <view class="sec">
+      <view class="sec-h">伴手礼</view>
+      <view class="gifts">
+        <view class="card gift-card">
+          <text class="gift-tag">赠送物料</text>
+          <view class="h">购票赠送</view>
+          <view class="s">随票附赠，先到先得</view>
+          <view class="link">查看详情 · 共 3 款 ›</view>
+        </view>
+        <view class="card gift-card">
+          <text class="gift-tag">现场售卖</text>
+          <view class="h">文创产品</view>
+          <view class="s">现场可购买</view>
+          <view class="link">查看详情 · 共 2 款 ›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 4. 主办与赞助 -->
+    <view class="sec">
+      <view class="sec-h">主办与赞助</view>
+      <view class="org-label">主办方</view>
+      <view class="org-list">北京雅雅教育咨询有限公司\n天津市飞凡培优培训学校有限公司</view>
+      <view class="card sponsor-card">
+        <text class="sponsor-tag">冠名赞助</text>
+        <view class="name">北京雅雅教育咨询有限公司</view>
+        <view class="link">点击了解甲方业务 ›</view>
+      </view>
+    </view>
+
+    <!-- 5. 购票须知 + 技术支持 -->
+    <view class="sec">
+      <view class="sec-h">购票须知</view>
+      <view class="rules">
+        <view class="rule-item">一人一票入场，涂改、污损、复印票无效。请提前到场配合安检。</view>
+        <view class="rule-item">门票为入场凭证暨纪念品。售出后除不可抗力导致演出取消或延期外，不予退票。</view>
+        <view class="rule-item">严禁携带易燃易爆及管制物品；专业摄影器材、自拍杆、三脚架及大型行李请勿带入。</view>
+        <view class="rule-item">场内严禁吸烟；请勿涂鸦或损坏场馆设施（损坏照价赔偿）；保管好随身物品。</view>
+        <view class="rule-item">互动观演请量力而行，照顾同行同伴；散场请有序离场，勿逗留，垃圾请带走。</view>
+      </view>
+    </view>
+
+    <view class="tech">技术支持：张鹤清、徐佳辉</view>
+    <button class="about-cta" bindtap="goBuy">去购票<text class="en">Buy Tickets</text></button>
+  </view>
+
+  <!-- 底部仿 Tab 栏：视觉等同，高亮「首页」（PROTO：about 时 Tab 高亮首页，无第四 Tab） -->
+  <view class="faketab">
+    <button class="ft-item active" data-url="/pages/home/home" bindtap="goTab">首页</button>
+    <button class="ft-item" data-url="/pages/verify/verify" bindtap="goTab">购票</button>
+    <button class="ft-item" data-url="/pages/me/me" bindtap="goTab">我的</button>
+  </view>
+</view>

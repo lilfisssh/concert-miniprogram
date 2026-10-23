@@ -1,0 +1,245 @@
+/* 活动介绍 —— 对照 proto/index.html #about（方案 B 独立页） */
+.about {
+  min-height: 100vh;
+  background: #F0F4ED;
+  box-sizing: border-box;
+  padding-bottom: calc(56px + env(safe-area-inset-bottom)); /* 给仿 Tab 栏让位 */
+}
+
+/* 自绘顶栏 */
+.about-top {
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-back {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1A3026;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 8px;
+  background: transparent;
+}
+
+.about-back:active { opacity: 0.6; }
+
+.about-title {
+  font-family: "Songti SC", serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A3026;
+}
+
+.about-body { padding: 0 18px 28px; }
+
+.sec { margin-top: 18px; }
+
+.sec-h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A3026;
+  margin-bottom: 12px;
+}
+
+.sec-h::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  background: #B5A642;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.intro-body {
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: rgba(26, 48, 38, 0.82);
+}
+
+.intro-body .p { margin-bottom: 10px; white-space: pre-line; }
+.intro-body .emph { font-weight: 600; color: #1A3026; }
+
+.card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  border: 0.5px solid rgba(26, 48, 38, 0.06);
+  box-shadow: 0 2px 12px rgba(26, 48, 38, 0.04);
+}
+
+.program-card { padding: 4px 16px 12px; }
+
+.prog-item {
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(26, 48, 38, 0.12);
+}
+
+.prog-item .num {
+  font-size: 12px;
+  color: #B5A642;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.prog-item .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A3026;
+}
+
+.prog-item .who {
+  margin-top: 3px;
+  font-size: 11px;
+  color: rgba(26, 48, 38, 0.5);
+}
+
+.prog-more {
+  width: 100%;
+  padding: 12px 0 6px;
+  font-size: 13px;
+  color: #2F6B4F;
+  text-align: center;
+  background: transparent;
+}
+
+.gifts { display: flex; gap: 10px; }
+
+.gift-card { flex: 1; padding: 14px; }
+
+.gift-tag,
+.sponsor-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(181, 166, 66, 0.14);
+  color: #8A6A1A;
+  font-weight: 600;
+}
+
+.gift-card .h,
+.sponsor-card .name {
+  margin-top: 8px;
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A3026;
+}
+
+.gift-card .s {
+  margin-top: 3px;
+  font-size: 11px;
+  color: rgba(26, 48, 38, 0.55);
+}
+
+.gift-card .link,
+.sponsor-card .link {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #2F6B4F;
+}
+
+.org-label {
+  font-size: 12px;
+  color: rgba(26, 48, 38, 0.55);
+  margin-bottom: 6px;
+}
+
+.org-list {
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: rgba(26, 48, 38, 0.82);
+  white-space: pre-line;
+}
+
+.sponsor-card { margin-top: 10px; padding: 14px; }
+
+.rules .rule-item {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(26, 48, 38, 0.82);
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.rules .rule-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #B5A642;
+}
+
+.tech {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(26, 48, 38, 0.45);
+}
+
+.about-cta {
+  margin: 16px auto 0;
+  display: block;
+  height: 42px;
+  padding: 0 28px;
+  border-radius: 21px;
+  border: 1.5px solid #2F6B4F;
+  background: rgba(255, 255, 255, 0.55);
+  color: #1A3026;
+  font-family: "Songti SC", serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 40px;
+}
+
+.about-cta .en { font-size: 14px; margin-left: 6px; }
+.about-cta:active { background: rgba(47, 107, 79, 0.08); }
+
+/* 底部仿 Tab 栏（视觉等同原生 tabBar，高亮首页） */
+.faketab {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 20;
+  display: flex;
+  height: calc(56px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.ft-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8A9A8E;
+  font-size: 12px;
+  background: transparent;
+}
+
+.ft-item.active { color: #2F6B4F; font-weight: 600; }
+
+button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  line-height: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+button::after { border: none; }

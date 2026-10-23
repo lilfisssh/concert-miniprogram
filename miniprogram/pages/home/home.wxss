@@ -1,0 +1,141 @@
+/* 首页 —— 对照 proto/index.html #home（壳阶段：水墨图为占位渐变，正式版换循环视频） */
+.home {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 占位水墨底（正式版：hero_loop.mp4 cover + hero_clean.jpg poster） */
+.bg {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background:
+    radial-gradient(120% 60% at 20% 85%, rgba(47, 107, 79, 0.35), rgba(47, 107, 79, 0) 60%),
+    radial-gradient(110% 55% at 85% 75%, rgba(91, 154, 114, 0.4), rgba(91, 154, 114, 0) 65%),
+    linear-gradient(168deg, #cfdcc6 0%, #b3c8aa 42%, #8fae94 100%);
+}
+
+.home-ui {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+}
+
+.hero-copy {
+  margin-top: 44px;
+  padding: 0 28px;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: rgba(26, 48, 38, 0.78);
+  margin-bottom: 14px;
+}
+
+.title-zh {
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  line-height: 1.25;
+  color: #1A3026;
+}
+
+.rule {
+  width: 148px;
+  height: 1px;
+  background: rgba(26, 48, 38, 0.35);
+  margin: 14px auto 12px;
+}
+
+.meta {
+  font-family: "Songti SC", serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(26, 48, 38, 0.72);
+}
+
+.spacer { flex: 1; min-height: 0; }
+
+.cta-wrap {
+  text-align: center;
+  padding: 0 24px 18px;
+  margin-bottom: 18px;
+}
+
+.cta {
+  display: inline-block;
+  padding: 6px 4px 8px;
+  font-family: "Songti SC", serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #1A3026;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid rgba(26, 48, 38, 0.55);
+  line-height: 1.4;
+  background: transparent;
+}
+
+.cta .en {
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  margin-left: 6px;
+}
+
+.cta:active { opacity: 0.65; }
+
+.entry-links {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 28px calc(14px + env(safe-area-inset-bottom));
+  gap: 8px;
+}
+
+.entry-links .link {
+  flex: 1;
+  padding: 4px 2px 6px;
+  text-align: center;
+  border-bottom: 1px solid rgba(26, 48, 38, 0.28);
+  background: transparent;
+}
+
+.entry-links .zh {
+  display: block;
+  font-family: "Songti SC", serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #1A3026;
+}
+
+.entry-links .en {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  margin-top: 2px;
+  color: #1A3026;
+}
+
+.entry-links .link:active { opacity: 0.6; }
+
+/* 重置 button 默认样式 */
+button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  line-height: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+button::after { border: none; }
