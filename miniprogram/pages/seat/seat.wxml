@@ -3,15 +3,14 @@
   <!-- 水墨底（占位渐变，正式版换 seat_ink_bg） -->
   <view class="bg-drift"></view>
 
-  <!-- 座位区（拖拽平移；点空白回全场） -->
+  <!-- 座位区（拖拽平移；点选由 touchend 自合成 tap 分发，点空白回全场） -->
   <view
     id="mapWrap"
     class="map-wrap {{focused ? '' : 'overview'}}"
     catchtouchstart="onTouchStart"
     catchtouchmove="onTouchMove"
     catchtouchend="onTouchEnd"
-    catchtouchcancel="onTouchEnd"
-    catchtap="onBlankTap">
+    catchtouchcancel="onTouchEnd">
 
     <view
       class="seat-map"
@@ -34,22 +33,20 @@
         wx:key="block"
         class="zone {{focused === item.block ? 'focused' : ''}} {{item.isTicketZone ? 'ticket-zone' : ''}}"
         style="left: {{item.x}}px; top: {{item.y}}px; width: {{item.w}}px;"
-        data-block="{{item.block}}"
-        catchtap="onZoneTap">
-        <view class="zone-label">{{item.label}}</view>
-        <view class="row" wx:for="{{item.rows}}" wx:for-item="row" wx:key="index">
+        data-block="{{item.block}}">
+        <view class="zone-label" data-block="{{item.block}}">{{item.label}}</view>
+        <view class="row" wx:for="{{item.rows}}" wx:for-item="row" wx:key="index" data-block="{{item.block}}">
           <view
             wx:for="{{row}}"
             wx:for-item="seat"
             wx:key="key"
             class="seat zone-{{seat.zoneLc}} {{seat.cls}}"
-            data-key="{{seat.key}}"
-            catchtap="onSeatTap">{{seat.cls === 'sold' || seat.cls === 'outzone' ? '' : seat.letter}}</view>
+            data-key="{{seat.key}}">{{seat.cls === 'sold' || seat.cls === 'outzone' ? '' : seat.letter}}</view>
         </view>
       </view>
     </view>
 
-    <button class="overview-btn {{focused ? 'show' : ''}}" catchtap="onOverview">看全场</button>
+    <button class="overview-btn {{focused ? 'show' : ''}}" data-act="overview">看全场</button>
     <view class="zone-hint {{focused ? 'hidden' : ''}}" style="bottom: {{panelH + 12}}px;">点选分区后选座</view>
   </view>
 

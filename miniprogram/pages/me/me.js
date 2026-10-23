@@ -9,13 +9,13 @@ const DEMO_ORDERS = [
   {
     line: 'B区2排3座 · B区2排4座',
     meta: '2026.08.10 18:00 · 智慧山 · 飞鸟剧场',
-    orderNo: 'DEMO-B-2',
+    orderNo: 'M2026081001',
     status: '已锁座'
   },
   {
     line: 'A区5排2座',
     meta: '2026.08.10 18:00 · 智慧山 · 飞鸟剧场',
-    orderNo: 'DEMO-A-1',
+    orderNo: 'M2026081002',
     status: '已锁座'
   }
 ];

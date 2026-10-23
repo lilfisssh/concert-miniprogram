@@ -64,7 +64,3 @@
   color: #ad6800;
   line-height: 36rpx;
 }
-.demo-code {
-  color: #2b6cb0;
-  text-decoration: underline;
-}

@@ -2,13 +2,6 @@
 const venue = require('../../utils/venue.js');
 const app = getApp();
 
-// 演示模式测试单号(云环境未配置时可用)
-const DEMO_TICKETS = {
-  'DEMO-A-1': { zone: 0, qty: 1 },
-  'DEMO-B-2': { zone: 1, qty: 2 },
-  'DEMO-C-2': { zone: 2, qty: 2 }
-};
-
 Page({
   data: {
     orderNo: '',
@@ -24,7 +17,6 @@ Page({
 
   onOrderInput(e) { this.setData({ orderNo: e.detail.value.trim() }); },
   onPhoneInput(e) { this.setData({ phone4: e.detail.value.trim() }); },
-  fillDemo(e) { this.setData({ orderNo: e.currentTarget.dataset.code }); },
 
   onVerify() {
     const orderNo = this.data.orderNo;
@@ -34,15 +26,10 @@ Page({
     }
     this.setData({ verifying: true });
 
-    // 演示模式: 本地校验测试单号
+    // 演示模式: 任意订单号本地核验通过, 默认 A区·1座
     if (this.data.demoMode) {
-      const t = DEMO_TICKETS[orderNo];
       this.setData({ verifying: false });
-      if (!t) {
-        wx.showModal({ title: '核验失败', content: '未找到该订单号(演示模式请用页面下方测试单号)', showCancel: false });
-        return;
-      }
-      this.gotoSeat({ orderNo, sessionId: app.globalData.sessionId, zone: t.zone, qty: t.qty });
+      this.gotoSeat({ orderNo, sessionId: app.globalData.sessionId, zone: 0, qty: 1 });
       return;
     }
 

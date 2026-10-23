@@ -23,7 +23,8 @@ const FIT = {
   focusFillMin: 0.70, focusFillMax: 0.85, focusFill: 0.78,
   focusScaleMin: 0.55, focusScaleMax: 2.40
 };
-const DRAG_THRESH = 10; // >10px 才算拖拽，短点不误触
+const DRAG_THRESH = 10; // >10px 才算拖拽；未超阈值在 touchend 自合成 tap（对照 proto，不等平台 tap）
+const TAP_MAX_MS = 350; // 短按时长上限
 const CAM_TRANSITION = 'transform .34s cubic-bezier(.22,.61,.36,1)';
 
 // 演示模式 mock 已售（新 seatKey 格式）
@@ -63,7 +64,6 @@ Page({
   panX: 0,
   panY: 0,
   gest: null,
-  suppressTap: false,
   inertiaTimer: 0,
   wrapW: 0,
   wrapH: 0,
@@ -330,10 +330,9 @@ Page({
     return seat.block === target;
   },
 
-  // ---------- 点选 ----------
-  onSeatTap(e) {
-    if (this.suppressTap) { this.suppressTap = false; return; }
-    const seat = this.seatByKey[e.currentTarget.dataset.key];
+  // ---------- 点选（touchend 自合成 tap 分发；不依赖平台 tap，短点不会被拖动吃掉） ----------
+  tapSeat(key) {
+    const seat = this.seatByKey[key];
     if (!seat) return;
     // 总览/非聚焦块点座 = 先聚焦该块；仅聚焦后才可选座
     if (!this.focusedTarget || !this.focusCovers(this.focusedTarget, seat)) {
@@ -362,20 +361,13 @@ Page({
   },
 
   // 区框/区标签：未聚焦则聚焦；已聚焦不再动作（不误回全场）
-  onZoneTap(e) {
-    if (this.suppressTap) { this.suppressTap = false; return; }
-    const block = e.currentTarget.dataset.block;
+  tapZone(block) {
     if (this.focusedTarget !== block) this.focusTarget(block);
   },
 
   // 点空白（舞台/缝隙）回全场
-  onBlankTap() {
-    if (this.suppressTap) { this.suppressTap = false; return; }
+  tapBlank() {
     if (this.focusedTarget) this.setOverview();
-  },
-
-  onOverview() {
-    this.setOverview();
   },
 
   // 价格卡：A/C 聚焦或回全场；B 聚焦左右合框
@@ -396,18 +388,23 @@ Page({
     this.setData({ ticketTab: e.currentTarget.dataset.tab });
   },
 
-  // ---------- 手势：拖拽平移（无 pinch/自由缩放） ----------
+  // ---------- 手势：拖拽平移（无 pinch/自由缩放）；短按自合成 tap ----------
   onTouchStart(e) {
     if (this.inertiaTimer) { clearTimeout(this.inertiaTimer); this.inertiaTimer = 0; }
     const t = e.touches[0];
+    const ds = (e.target && e.target.dataset) || {};
+    const now = Date.now();
     this.gest = {
       x0: t.clientX, y0: t.clientY,
       pan0x: this.panX, pan0y: this.panY,
       moved: false,
-      lastX: t.clientX, lastY: t.clientY, lastT: Date.now(),
-      vx: 0, vy: 0
+      lastX: t.clientX, lastY: t.clientY, lastT: now,
+      vx: 0, vy: 0,
+      t0: now,
+      key: ds.key || '',     // 座位
+      block: ds.block || '', // 区块/区标签/行缝隙
+      act: ds.act || ''      // 「看全场」按钮
     };
-    this.suppressTap = false;
   },
 
   onTouchMove(e) {
@@ -422,10 +419,7 @@ Page({
     g.vy = (t.clientY - g.lastY) / dt * 1000;
     g.lastX = t.clientX; g.lastY = t.clientY; g.lastT = now;
     if (!g.moved && Math.hypot(dx, dy) < DRAG_THRESH) return;
-    if (!g.moved) {
-      g.moved = true;
-      this.suppressTap = true; // 吞掉随后的 tap，避免误选/误回全场
-    }
+    if (!g.moved) g.moved = true; // 进入拖拽：touchend 不再合成 tap
     const c = this.clampPan(g.pan0x + dx, g.pan0y + dy, !!this.focusedTarget);
     this.panX = c.x;
     this.panY = c.y;
@@ -436,7 +430,16 @@ Page({
     const g = this.gest;
     if (!g) return;
     this.gest = null;
-    if (!g.moved) return;
+    if (!g.moved) {
+      // 短按 = 点选（对照 proto：位移未超阈值且非长按即 tap，自行分发）
+      if (Date.now() - g.t0 < TAP_MAX_MS) {
+        if (g.act === 'overview') this.setOverview();
+        else if (g.key) this.tapSeat(g.key);
+        else if (g.block) this.tapZone(g.block);
+        else this.tapBlank();
+      }
+      return;
+    }
     this.startInertia(g.vx, g.vy);
   },
 

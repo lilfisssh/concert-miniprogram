@@ -36,6 +36,6 @@
   </view>
 
   <view wx:if="{{demoMode}}" class="demo">
-    演示模式可用测试单号：<text class="demo-code" bindtap="fillDemo" data-code="DEMO-A-1">DEMO-A-1</text>（A区·1座）、<text class="demo-code" bindtap="fillDemo" data-code="DEMO-B-2">DEMO-B-2</text>（B区·2座）、<text class="demo-code" bindtap="fillDemo" data-code="DEMO-C-2">DEMO-C-2</text>（C区·2座）
+    演示模式：输入任意订单号即可本地核验（默认 A区·1座）
   </view>
 </view>

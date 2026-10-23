@@ -48,7 +48,7 @@ concert-miniprogram/
 
 1. 用**微信开发者工具**打开 `concert-miniprogram` 目录，填测试 AppID。
 2. `app.js` 的 `cloudEnv` 仍是 `TODO_...` 时自动进入**演示模式**：
-   - 核验页用内置测试单号（页面下方可点：`DEMO-A-1`=A区·1座、`DEMO-B-2`=B区·2座、`DEMO-C-2`=C区·2座）；
+   - 核验页输入任意订单号即可本地核验（默认 A区·1座）；
    - 核验 → 选座（限对应分区/数量）→ 确认锁座 → 结果，整套流程走通，不依赖云端。
 
 ---
@@ -148,7 +148,6 @@ concert-miniprogram/
 |---|---|
 | 座位布局 / 座位号 / 分区 | `miniprogram/utils/venue.js` 与 `cloudfunctions/claimSeats/venue.js` 的 `BLOCKS`/`zoneOf()`（**两处同步**） |
 | 票档→分区映射 | `syncWxStoreOrders` 的 `SKU_ZONE_MAP` |
-| 演示测试单号 | `pages/verify/verify.js` 的 `DEMO_TICKETS` |
 | 场次ID | `app.js` 的 `sessionId` 与 `syncWxStoreOrders` 的 `SESSION_ID` |
 
 > ⚠️ `venue.js` 前端与 `claimSeats` 各一份，改布局/分区时两处都要同步。
