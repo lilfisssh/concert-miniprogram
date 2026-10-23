@@ -1,11 +1,10 @@
 <!-- 首页：全屏水墨循环视频 + DOM 叠字（叠字不烧进视频） -->
 <view class="home" style="padding-top: {{statusBarHeight}}px">
-  <!-- 兜底：poster 静帧（首帧即刻可见，视频失败时兜底） -->
+  <!-- 兜底静帧：首帧即刻可见，视频失败时兜底 -->
   <image class="bg-fallback" src="/assets/hero/hero_clean.jpg" mode="aspectFill" aria-hidden="true" />
-  <!-- 主视觉：循环视频，首帧就绪后淡入 -->
-  <video class="bg-video {{videoReady ? 'is-on' : ''}}"
+  <!-- 主视觉：循环视频，首帧就绪后淡入；onReady/onShow 里用 VideoContext 主动 play -->
+  <video id="bgVideo" class="bg-video {{videoReady ? 'is-on' : ''}}"
     src="/assets/hero/hero_loop_clean.mp4"
-    poster="/assets/hero/hero_clean.jpg"
     autoplay muted loop
     object-fit="cover"
     controls="{{false}}"

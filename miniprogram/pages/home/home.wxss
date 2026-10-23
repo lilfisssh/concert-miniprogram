@@ -8,7 +8,7 @@
   background: #B3C8AA;
 }
 
-/* 兜底静帧（poster 图）：首帧即刻可见，视频加载失败时兜底 */
+/* 兜底静帧：首帧即刻可见，视频加载失败时兜底 */
 .bg-fallback {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
@@ -75,6 +75,19 @@
 }
 
 .spacer { flex: 1; min-height: 0; }
+
+/* 重置按钮默认样式（class 选择器；置于 .cta/.link 规则之前，保证后面的 padding 等覆盖生效） */
+.cta, .link {
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  line-height: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+.cta::after, .link::after { border: none; }
 
 .cta-wrap {
   text-align: center;
@@ -148,18 +161,4 @@
   to { opacity: 1; }
 }
 .hero-copy { animation: hero-rise 0.9s ease-out 0.15s both; }
-.cta-wrap,
-.entry-links { animation: hero-fade 0.9s ease-out 0.45s both; }
-
-/* 重置 button 默认样式 */
-button {
-  padding: 0;
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  background: none;
-  line-height: inherit;
-  font-size: inherit;
-  color: inherit;
-}
-button::after { border: none; }
+.cta-wrap, .entry-links { animation: hero-fade 0.9s ease-out 0.45s both; }
