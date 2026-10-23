@@ -1,20 +1,31 @@
-/* 首页 —— 对照 proto/index.html #home（壳阶段：水墨图为占位渐变，正式版换循环视频） */
+/* 首页 —— 全屏水墨循环视频 + DOM 叠字（玉石调，动效克制） */
 .home {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
+  /* 素色玉石底：媒体未就绪时的最终兜底 */
+  background: #B3C8AA;
 }
 
-/* 占位水墨底（正式版：hero_loop.mp4 cover + hero_clean.jpg poster） */
-.bg {
+/* 兜底静帧（poster 图）：首帧即刻可见，视频加载失败时兜底 */
+.bg-fallback {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
-  background:
-    radial-gradient(120% 60% at 20% 85%, rgba(47, 107, 79, 0.35), rgba(47, 107, 79, 0) 60%),
-    radial-gradient(110% 55% at 85% 75%, rgba(91, 154, 114, 0.4), rgba(91, 154, 114, 0) 65%),
-    linear-gradient(168deg, #cfdcc6 0%, #b3c8aa 42%, #8fae94 100%);
+  width: 100%;
+  height: 100%;
 }
+
+/* 循环视频层：首帧就绪后淡入（.is-on） */
+.bg-video {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.bg-video.is-on { opacity: 1; }
 
 .home-ui {
   position: relative;
@@ -126,6 +137,19 @@
 }
 
 .entry-links .link:active { opacity: 0.6; }
+
+/* 入场动效：克制，各播放一次，无循环 */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.hero-copy { animation: hero-rise 0.9s ease-out 0.15s both; }
+.cta-wrap,
+.entry-links { animation: hero-fade 0.9s ease-out 0.45s both; }
 
 /* 重置 button 默认样式 */
 button {
